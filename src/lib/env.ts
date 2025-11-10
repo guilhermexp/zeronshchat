@@ -3,7 +3,7 @@ import { z } from 'zod';
 
 export const env = createEnv({
     server: {
-        ZERO_UPSTREAM_DB: z.string().url(),
+        ZERO_UPSTREAM_DB: z.string().min(1),
         AI_GATEWAY_API_KEY: z.string().min(1),
         EXA_API_KEY: z.string().min(1),
         STRIPE_SECRET_KEY: z.string().min(1),

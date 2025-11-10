@@ -33,23 +33,35 @@ function RouteComponent() {
                 transport={
                     new DefaultChatTransport({
                         api: '/api/thread',
+                        credentials: 'include', // Ensure cookies are sent
                         prepareSendMessagesRequest: async ({ id, messages, body }) => {
                             const settings = db.query.setting
                                 .where('userId', '=', db.userID)
                                 .one()
                                 .materialize();
 
+                            console.log('Settings data:', settings.data);
+                            console.log('ModelId:', settings.data?.modelId);
+                            console.log('Message being sent:', messages.at(-1));
+                            console.log('Body:', body);
+
                             return {
                                 body: {
                                     id,
                                     message: messages.at(-1),
-                                    modelId: settings.data?.modelId,
+                                    modelId: settings.data?.modelId || 'anthropic/claude-3.5-sonnet', // Fallback to default model
                                     ...body,
                                 },
                             };
                         },
                     })
                 }
+                onError={(error) => {
+                    console.error('Thread error:', error);
+                }}
+                onFinish={(message) => {
+                    console.log('Thread finished:', message);
+                }}
             >
                 <ThreadContainer>
                     <Header />

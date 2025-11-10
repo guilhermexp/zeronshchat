@@ -1,7 +1,11 @@
 {
   "permissions": {
     "allow": [
-      "Bash(npx shadcn@latest add:*)"
+      "Bash(npx shadcn@latest add:*)",
+      "Bash(npm run dev:*)",
+      "Bash(npm install:*)",
+      "Bash(npx drizzle-kit push:*)",
+      "Bash(npx drizzle-kit generate:*)"
     ],
     "deny": []
   }
